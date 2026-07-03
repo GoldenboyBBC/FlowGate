@@ -1,4 +1,4 @@
-# FlowGate Authentication Service
+# Authentication Service
 
 This repository contains the authentication service for a test platform, built with Spring Boot, Spring Security, and JWT for secure user management. It provides robust user registration and login functionalities.
 
