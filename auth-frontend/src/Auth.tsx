@@ -49,6 +49,7 @@ export default function Auth() {
   const handleLogout = () => {
     localStorage.removeItem('token');
     setToken(null);
+    setMessage('');
   };
 
   if (token) {

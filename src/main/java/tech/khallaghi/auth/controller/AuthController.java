@@ -38,9 +38,13 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<AuthDto.Response> login(@RequestBody AuthDto.Request request) {
-        authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(request.username(), request.password())
-        );
+        try {
+            authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(request.username(), request.password())
+            );
+        } catch (Exception e) {
+            return ResponseEntity.status(401).body(new AuthDto.Response(false, "Invalid username or password", null));
+        }
 
         final UserDetails userDetails = userDetailsService.loadUserByUsername(request.username());
         final String jwt = jwtUtil.generateToken(userDetails);
