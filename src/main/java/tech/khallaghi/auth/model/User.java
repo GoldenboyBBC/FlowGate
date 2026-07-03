@@ -16,6 +16,15 @@ public class User {
     @Column(nullable = false)
     private String password;
 
+    @Column(unique = true, length = 255)
+    private String email;
+
+    @Column(length = 255)
+    private String fullName;
+
+    @Column(length = 255)
+    private String oauth2Id;
+
     // Constructors
     public User() {}
 
@@ -47,5 +56,29 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
+    public String getOauth2Id() {
+        return oauth2Id;
+    }
+
+    public void setOauth2Id(String oauth2Id) {
+        this.oauth2Id = oauth2Id;
     }
 }
