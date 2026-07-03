@@ -13,6 +13,20 @@ export default function Auth() {
     if (storedToken) {
       setToken(storedToken);
     }
+
+    // Handle OAuth2 callback
+    const params = new URLSearchParams(window.location.search);
+    const callbackToken = params.get('token');
+    const username = params.get('username');
+    const email = params.get('email');
+
+    if (callbackToken) {
+      localStorage.setItem('token', callbackToken);
+      localStorage.setItem('username', username || '');
+      localStorage.setItem('email', email || '');
+      setToken(callbackToken);
+      window.history.replaceState({}, document.title, window.location.pathname);
+    }
   }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -35,6 +49,7 @@ export default function Auth() {
       if (data.success) {
         if (isLogin) {
           localStorage.setItem('token', data.jwt);
+          localStorage.setItem('username', username);
           setToken(data.jwt);
         } else {
           setIsLogin(true);
@@ -46,18 +61,28 @@ export default function Auth() {
     }
   };
 
+  const handleGoogleLogin = () => {
+    // Redirect to Google OAuth2 login endpoint
+    window.location.href = 'http://localhost:8080/oauth2/authorization/google';
+  };
+
   const handleLogout = () => {
     localStorage.removeItem('token');
+    localStorage.removeItem('username');
+    localStorage.removeItem('email');
     setToken(null);
     setMessage('');
   };
 
   if (token) {
+    const storedUsername = localStorage.getItem('username');
+    const storedEmail = localStorage.getItem('email');
     return (
       <div style={styles.container}>
         <div style={styles.form}>
           <h2 style={styles.title}>Welcome</h2>
-          <p style={styles.message}>You are logged in.</p>
+          <p style={styles.message}>You are logged in as <strong>{storedUsername || storedEmail}</strong></p>
+          {storedEmail && <p style={styles.message}>Email: {storedEmail}</p>}
           <button onClick={handleLogout} style={styles.button}>
             Logout
           </button>
@@ -91,6 +116,18 @@ export default function Auth() {
         
         <button type="submit" style={styles.button}>
           {isLogin ? 'Login' : 'Register'}
+        </button>
+
+        <div style={styles.divider}>
+          <span>OR</span>
+        </div>
+
+        <button 
+          type="button"
+          onClick={handleGoogleLogin} 
+          style={{...styles.button, ...styles.googleButton}}
+        >
+          Sign in with Google
         </button>
 
         {message && (
@@ -159,6 +196,19 @@ const styles = {
     fontWeight: 'bold' as const,
     fontSize: '14px',
     transition: 'background 0.2s',
+    marginBottom: '12px',
+  },
+  divider: {
+    position: 'relative' as const,
+    textAlign: 'center' as const,
+    margin: '16px 0',
+    fontSize: '13px',
+    color: '#666',
+  },
+  googleButton: {
+    backgroundColor: '#1f2937',
+    border: '1px solid #4b5563',
+    marginBottom: '0px',
   },
   message: {
     marginTop: '16px',
