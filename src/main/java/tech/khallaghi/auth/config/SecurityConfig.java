@@ -12,7 +12,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
+// import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import tech.khallaghi.auth.filter.JwtRequestFilter;
 import tech.khallaghi.auth.service.OAuth2UserService;
 

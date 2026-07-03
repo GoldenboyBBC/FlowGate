@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import tech.khallaghi.auth.config.JwtUtil;
-import tech.khallaghi.auth.dto.AuthDto;
+// import tech.khallaghi.auth.dto.AuthDto;
 import tech.khallaghi.auth.repository.UserRepository;
 
 import java.util.HashMap;
