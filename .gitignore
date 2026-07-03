@@ -1,4 +1,5 @@
 HELP.md
+JWT_Implementation_Guide_FA.md
 target/
 .mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
